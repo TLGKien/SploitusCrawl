@@ -1,9 +1,10 @@
+import uuid
 from django.db import models
 
 # Create your models here.
 
 class Project(models.Model):
-    _id = models.IntegerField(null=False, blank=False)
+    _id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     projectName = models.CharField(null=False, blank=False, max_length=100)
     projectDescription = models.CharField(null=True, blank=False, max_length=250)
     partner = models.CharField(null=False, blank=False, max_length=40)
@@ -14,8 +15,8 @@ class Project(models.Model):
     status = models.CharField(null=False, blank=False, max_length=10)
 
     @classmethod
-    def create(cls, _id, projectName, projectDescription, partner, manager, startDate, dueDate, budget, status):
-        test_record = cls(_id = _id, projectName = projectName, projectDescription = projectDescription, 
+    def create(cls, projectName, projectDescription, partner, manager, startDate, dueDate, budget, status):
+        test_record = cls(projectName = projectName, projectDescription = projectDescription, 
                           partner = partner, manager = manager, startDate = startDate, 
                           dueDate = dueDate, budget = budget, status = status)
         return test_record
@@ -28,4 +29,3 @@ class Project(models.Model):
     
     class Meta:
         app_label = 'myapp'
-        db_table = 'project'
