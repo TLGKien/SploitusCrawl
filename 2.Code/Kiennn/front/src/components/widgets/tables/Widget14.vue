@@ -57,17 +57,6 @@
                   {{ header.text }}
                 </th>
               </template>
-
-
-
-
-              <!-- <th class="min-w-150px">Order Id</th>
-              <th class="min-w-140px">Country</th>
-              <th class="min-w-120px">Date</th>
-              <th class="min-w-120px">Company</th>
-              <th class="min-w-120px">Total</th>
-              <th class="min-w-120px">Status</th>
-              <th class="min-w-100px text-end">Actions</th> -->
             </tr>
           </thead>
           <!--end::Table head-->
@@ -136,13 +125,6 @@
                 </td>
 
                 <td class="text-end">
-                  <a
-                    href="#"
-                    class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                  >
-                    <KTIcon icon-name="switch" icon-class="fs-3" />
-                  </a>
-
                   <a
                     href="#"
                     class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"

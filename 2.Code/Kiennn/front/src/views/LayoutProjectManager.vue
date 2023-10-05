@@ -1,28 +1,36 @@
 <template>
-  <TablesWidget widget-classes="mb-5 mb-xl-8" :tableHeader="tableHeader" :tableData="tableData"></TablesWidget>
+  <KTDataTable
+    :header= "tableHeader"
+    :data= "tableData"
+    :itemsPerPage="1"
+    :itemsPerPageDropdownEnabled="true"
+    ></KTDataTable>
 </template>
 
 <script lang="ts">
 import { defineComponent,onMounted,ref } from "vue";
 
-import TablesWidget from "@/components/widgets/tables/Widget14.vue";
 import ApiService from "@/core/services/ApiService.ts";
+import KTDataTable from "@/components/kt-datatable/KTDataTable.vue";
+import Dropdown1 from "@/components/dropdown/Dropdown1.vue";
+
 
 export default defineComponent({
   name: "widgets-tables",
   setup(){
-    const projects = ref([]);
-    const tableHeader = [
+    
+      const tableHeader = [
         // Define your table headers here
-        { text: 'Dự án', value: 'title' },
-        { text: 'Đối tác', value: 'partner' },
-        { text: 'Người phụ trách', value: 'manager' },
-        { text: 'Ngày bắt đầu', value: 'startDate' },
-        { text: 'Ngày hết hạn', value: 'dueDate' },
-        { text: 'Ngân sách', value: 'budget' },
-        { text: 'Trạng thái', value: 'status' },
-        { text: 'Hành động', value: 'actions' },
+        { columnName: 'Dự án', columnLabel: 'projectName', sortEnabled: true, columnWidth: 20 },
+        { columnName: 'Đối tác', columnLabel: 'partner', sortEnabled: true, columnWidth: 20 },
+        { columnName: 'Người phụ trách', columnLabel: 'manager', sortEnabled: true, columnWidth: 200 },
+        { columnName: 'Ngày bắt đầu', columnLabel: 'startDate', sortEnabled: true, columnWidth: 20 },
+        { columnName: 'Ngày hết hạn', columnLabel: 'dueDate', sortEnabled: true, columnWidth: 20 },
+        { columnName: 'Ngân sách', columnLabel: 'budget', sortEnabled: true, columnWidth: 20 },
+        { columnName: 'Trạng thái', columnLabel: 'status', sortEnabled: true, columnWidth: 20 },
+        { columnName: 'Hành động', columnLabel: 'actions', sortEnabled: true, columnWidth: 20 },
       ];
+    const projects = ref([]);
 
     onMounted(async () => {
       await ApiService.get("project")
@@ -35,12 +43,13 @@ export default defineComponent({
     });
     
     return {
-      tableHeader:tableHeader,
+      tableHeader,
       tableData: projects,
     };
   },
   components: {
-    TablesWidget,
+    KTDataTable,
+    Dropdown1
   },
 });
 </script>

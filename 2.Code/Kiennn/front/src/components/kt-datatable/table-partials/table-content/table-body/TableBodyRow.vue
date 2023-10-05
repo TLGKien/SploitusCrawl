@@ -15,13 +15,87 @@
             />
           </div>
         </td>
-        <template v-for="(properties, j) in header" :key="j">
-          <td :class="{ 'text-end': j === header.length - 1 }">
-            <slot :name="`${properties.columnLabel}`" :row="row">
-              {{ row }}
-            </slot>
-          </td>
-        </template>
+
+        <td>
+          <slot :name="`projectName`" :row="row">
+            <a
+              href="#"
+              class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6"
+              data-bs-toggle="modal"
+              data-bs-target="#kt_modal_add_customer"
+              >{{ row.projectName }}</a
+            >
+            <span class="text-muted fw-semobold text-muted d-block fs-7"
+              >{{ row.projectDescription }}</span
+            >
+          </slot>
+        </td>
+
+        <td>
+          <slot :name="`partner`" :row="row">
+            <a
+              href="#"
+              class="text-dark fw-bold text-hover-primary fs-6"
+              >{{ row.partner }}</a
+            >
+          </slot>
+        </td>
+
+        <td>
+          <slot :name="`manager`" :row="row">
+            <a
+              href="#"
+              class="text-dark fw-bold text-hover-primary fs-6"
+              >{{ row.manager }}</a
+            >
+          </slot>
+        </td>
+
+        <td class="text-dark fw-bold fs-6">
+          <slot :name="`startDate`" :row="row">
+            {{ row.startDate }}
+          </slot>
+        </td>
+
+        <td class="text-dark fw-bold fs-6">
+          <slot :name="`dueDate`" :row="row">
+            {{ row.dueDate }}
+          </slot>
+        </td>
+        <td class="text-dark fw-bold fs-6">
+          <slot :name="`budget`" :row="row">
+            {{ row.budget }}
+          </slot>
+        </td>
+        
+        <td>
+          <slot :name="`status`" :row="row">
+            <span
+              :class="`badge-light-${row.status}`"
+              class="badge"
+              >{{ row.status }}
+            </span>
+          </slot>
+        </td>
+
+        <td class="text-end">
+          <slot :name="`actions`" :row="row">
+            <a
+              href="#"
+              class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+            >
+              <KTIcon icon-name="pencil" icon-class="fs-3" />
+            </a>
+
+            <a
+              href="#"
+              class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+            >
+              <KTIcon icon-name="trash" icon-class="fs-3" />
+            </a>
+          </slot>
+        </td>
+
       </tr>
     </template>
   </tbody>
