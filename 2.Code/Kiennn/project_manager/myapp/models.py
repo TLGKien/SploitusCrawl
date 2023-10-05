@@ -9,7 +9,7 @@ class Project(models.Model):
     projectDescription = models.CharField(null=True, blank=False, max_length=250)
     partner = models.CharField(null=False, blank=False, max_length=40)
     manager = models.CharField(null=False, blank=False, max_length=40)
-    startDate = models.DateField(null=False, blank=False, auto_now=False, auto_now_add=False)
+    startDate = models.DateField(null =False, blank=False, auto_now=False, auto_now_add=False)
     dueDate = models.DateField(null=True, blank=False, auto_now=False, auto_now_add=False)
     budget = models.FloatField(null=True, blank=False)
     status = models.CharField(null=False, blank=False, max_length=10)

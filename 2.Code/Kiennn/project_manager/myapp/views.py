@@ -3,6 +3,7 @@ from myapp.models import Project
 from rest_framework import generics
 from myapp.serializers import ProjectSerialiser
 
+
 class ProjectCreate(generics.CreateAPIView):
     # API endpoint that allows creation of a new Project
     queryset = Project.objects.all()

@@ -7,7 +7,7 @@
       id="kt_login_signin_form"
       @submit="onSubmitLogin"
       :validation-schema="login"
-      :initial-values="{ email: 'admin@demo.com', password: 'demo' }"
+      :initial-values="{ username: 'admin@demo.com', password: 'demo' }"
     >
       <!--begin::Heading-->
       <div class="text-center mb-10">
@@ -29,15 +29,15 @@
 
       <div class="mb-10 bg-light-info p-8 rounded">
         <div class="text-info">
-          Use account <strong>admin@demo.com</strong> and password
-          <strong>demo</strong> to continue.
+          Use account <strong>qqqq</strong> and password
+          <strong>qqqqqqq</strong> to continue.
         </div>
       </div>
 
       <!--begin::Input group-->
       <div class="fv-row mb-10">
         <!--begin::Label-->
-        <label class="form-label fs-6 fw-bold text-dark">Email</label>
+        <label class="form-label fs-6 fw-bold text-dark">Username</label>
         <!--end::Label-->
 
         <!--begin::Input-->
@@ -45,13 +45,13 @@
           tabindex="1"
           class="form-control form-control-lg form-control-solid"
           type="text"
-          name="email"
-          autocomplete="off"
+          name="username"
+          autocomplete="on"
         />
         <!--end::Input-->
         <div class="fv-plugins-message-container">
           <div class="fv-help-block">
-            <ErrorMessage name="email" />
+            <ErrorMessage name="username" />
           </div>
         </div>
       </div>
@@ -79,7 +79,7 @@
           class="form-control form-control-lg form-control-solid"
           type="password"
           name="password"
-          autocomplete="off"
+          autocomplete="on"
         />
         <!--end::Input-->
         <div class="fv-plugins-message-container">
@@ -185,7 +185,7 @@ export default defineComponent({
 
     //Create form validation object
     const login = Yup.object().shape({
-      email: Yup.string().email().required().label("Email"),
+      username: Yup.string().required().label("username"),
       password: Yup.string().min(4).required().label("Password"),
     });
 

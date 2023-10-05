@@ -88,17 +88,17 @@
 
       <!--begin::Input group-->
       <div class="fv-row mb-7">
-        <label class="form-label fw-bold text-dark fs-6">Email</label>
+        <label class="form-label fw-bold text-dark fs-6">username</label>
         <Field
           class="form-control form-control-lg form-control-solid"
-          type="email"
+          type="username"
           placeholder=""
-          name="email"
+          name="username"
           autocomplete="off"
         />
         <div class="fv-plugins-message-container">
           <div class="fv-help-block">
-            <ErrorMessage name="email" />
+            <ErrorMessage name="username" />
           </div>
         </div>
       </div>
@@ -244,7 +244,7 @@ export default defineComponent({
     const registration = Yup.object().shape({
       first_name: Yup.string().required().label("Name"),
       last_name: Yup.string().required().label("Surname"),
-      email: Yup.string().min(4).required().email().label("Email"),
+      username: Yup.string().min(4).required().label("username"),
       password: Yup.string().required().label("Password"),
       password_confirmation: Yup.string()
         .required()

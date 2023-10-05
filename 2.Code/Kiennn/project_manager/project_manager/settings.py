@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -39,15 +40,28 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'myapp',
+    'corsheaders',
+    'rest_framework.authtoken',
+    'api_auth',
 ]
 
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-      'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
 }
+AUTHENTICATION_CLASSES = [
+    # ...
+    'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    # ...
+]
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': timedelta(hours=1), 
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'api_auth.custom.custom_response.jwt_response_payload_handler',
+}
+AUTHENTICATION_BACKENDS = [
+    'api_auth.custom.custom_auth_backend.CustomAuthBackend',
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,7 +71,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+# Cấu hình CORS_ALLOW_ALL_ORIGINS để cho phép tất cả các nguồn
+CORS_ALLOW_ALL_ORIGINS = True
+# Hoặc cấu hình CORS_ALLOWED_ORIGINS để chỉ định danh sách các nguồn được phép
+# CORS_ALLOWED_ORIGINS = [
+#     "http://127.0.0.1:5173",
+#     "http://example.com",
+#     # Thêm các nguồn khác nếu cần
+# ]
 
 ROOT_URLCONF = 'project_manager.urls'
 
@@ -86,7 +110,7 @@ WSGI_APPLICATION = 'project_manager.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "project_manager2",
+        "NAME": "project_manager",
         "USER": "kien",
         "PASSWORD": "123",
         "HOST": "localhost",

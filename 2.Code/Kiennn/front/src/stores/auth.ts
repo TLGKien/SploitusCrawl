@@ -6,7 +6,7 @@ import JwtService from "@/core/services/JwtService";
 export interface User {
   name: string;
   surname: string;
-  email: string;
+  username: string;
   password: string;
   api_token: string;
 }
@@ -35,7 +35,7 @@ export const useAuthStore = defineStore("auth", () => {
   }
 
   function login(credentials: User) {
-    return ApiService.post("login", credentials)
+    return ApiService.post("auth/login", credentials)
       .then(({ data }) => {
         setAuth(data);
       })
@@ -49,7 +49,7 @@ export const useAuthStore = defineStore("auth", () => {
   }
 
   function register(credentials: User) {
-    return ApiService.post("register", credentials)
+    return ApiService.post("auth/register", credentials)
       .then(({ data }) => {
         setAuth(data);
       })
@@ -58,8 +58,8 @@ export const useAuthStore = defineStore("auth", () => {
       });
   }
 
-  function forgotPassword(email: string) {
-    return ApiService.post("forgot_password", email)
+  function forgotPassword(username: string) {
+    return ApiService.post("auth/forgot_password", username)
       .then(() => {
         setError({});
       })
@@ -71,7 +71,7 @@ export const useAuthStore = defineStore("auth", () => {
   function verifyAuth() {
     if (JwtService.getToken()) {
       ApiService.setHeader();
-      ApiService.post("verify_token", { api_token: JwtService.getToken() })
+      ApiService.post("auth/verify_token", { api_token: JwtService.getToken() })
         .then(({ data }) => {
           setAuth(data);
         })

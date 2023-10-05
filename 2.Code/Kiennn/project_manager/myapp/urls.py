@@ -7,5 +7,5 @@ urlpatterns = [
     path('', ProjectList.as_view()),
     path('<uuid:_id>/', ProjectDetail.as_view(), name='retrieve-project'),
     path('update/<uuid:_id>/', ProjectUpdate.as_view(), name='update-project'),
-    path('delete/<uuid:_id>/', ProjectDelete.as_view(), name='delete-project')
+    path('delete/<uuid:_id>/', ProjectDelete.as_view(), name='delete-project'),
 ]
