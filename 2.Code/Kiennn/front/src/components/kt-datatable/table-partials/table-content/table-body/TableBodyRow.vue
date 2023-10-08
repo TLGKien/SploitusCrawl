@@ -16,6 +16,12 @@
           </div>
         </td>
 
+        <td class="hidden-column text-dark fw-bold fs-6}">
+          <slot :name="`pk`" :row="row">
+            {{ row.pk }}
+          </slot>
+        </td>
+
         <td>
           <slot :name="`projectName`" :row="row">
             <a
@@ -83,30 +89,45 @@
             <a
               href="#"
               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+              data-bs-toggle="modal"
+              data-bs-target="#kt_modal_edit_project"
             >
               <KTIcon icon-name="pencil" icon-class="fs-3" />
             </a>
+            
 
             <a
               href="#"
               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+              data-bs-toggle="modal"
+              data-bs-target="#kt_modal_delete_project"
             >
               <KTIcon icon-name="trash" icon-class="fs-3" />
             </a>
+            
           </slot>
         </td>
 
       </tr>
+      <EditProjectModal :pk="row.pk"/>
+      <DeleteProjectModal/>
     </template>
+    
   </tbody>
+
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
+import EditProjectModal from "@/components/modals/forms/EditProjectModal.vue";
+import DeleteProjectModal from "@/components/modals/forms/DeleteProjectModal.vue";
 
 export default defineComponent({
   name: "table-body-row",
-  components: {},
+  components: {
+    EditProjectModal,
+    DeleteProjectModal,
+  },
   props: {
     header: { type: Array as () => Array<any>, required: true },
     data: { type: Array as () => Array<any>, required: true },
@@ -146,3 +167,8 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+  .hidden-column {
+    display: none;
+  }
+</style>

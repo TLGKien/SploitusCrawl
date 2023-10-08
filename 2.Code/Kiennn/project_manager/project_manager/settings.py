@@ -56,9 +56,10 @@ AUTHENTICATION_CLASSES = [
     # ...
 ]
 JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': timedelta(hours=1), 
+    'JWT_EXPIRATION_DELTA': timedelta(hours=12), 
     'JWT_RESPONSE_PAYLOAD_HANDLER': 'api_auth.custom.custom_response.jwt_response_payload_handler',
 }
+
 AUTHENTICATION_BACKENDS = [
     'api_auth.custom.custom_auth_backend.CustomAuthBackend',
 ]

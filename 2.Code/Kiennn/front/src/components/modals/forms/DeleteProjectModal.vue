@@ -1,8 +1,8 @@
 <template>
   <div
     class="modal fade"
-    id="kt_modal_add_customer"
-    ref="addCustomerModalRef"
+    id="kt_modal_delete_project"
+    ref="deleteProjectModalRef"
     tabindex="-1"
     aria-hidden="true"
   >
@@ -11,14 +11,14 @@
       <!--begin::Modal content-->
       <div class="modal-content">
         <!--begin::Modal header-->
-        <div class="modal-header" id="kt_modal_add_customer_header">
+        <div class="modal-header" id="kt_modal_delete_project_header">
           <!--begin::Modal title-->
-          <h2 class="fw-bold">Add a Customer</h2>
+          <h2 class="fw-bold">Delete a Project</h2>
           <!--end::Modal title-->
 
           <!--begin::Close-->
           <div
-            id="kt_modal_add_customer_close"
+            id="kt_modal_delete_project_close"
             data-bs-dismiss="modal"
             class="btn btn-icon btn-sm btn-active-icon-primary"
           >
@@ -39,18 +39,18 @@
             <!--begin::Scroll-->
             <div
               class="scroll-y me-n7 pe-7"
-              id="kt_modal_add_customer_scroll"
+              id="kt_modal_delete_project_scroll"
               data-kt-scroll="true"
               data-kt-scroll-activate="{default: false, lg: true}"
               data-kt-scroll-max-height="auto"
-              data-kt-scroll-dependencies="#kt_modal_add_customer_header"
-              data-kt-scroll-wrappers="#kt_modal_add_customer_scroll"
+              data-kt-scroll-dependencies="#kt_modal_delete_project_header"
+              data-kt-scroll-wrappers="#kt_modal_delete_project_scroll"
               data-kt-scroll-offset="300px"
             >
               <!--begin::Input group-->
               <div class="fv-row mb-7">
                 <!--begin::Label-->
-                <label class="required fs-6 fw-semobold mb-2">Name</label>
+                <label class="required fs-6 fw-semobold mb-2">Mã dự án</label>
                 <!--end::Label-->
 
                 <!--begin::Input-->
@@ -105,10 +105,10 @@
               <div
                 class="fw-bold fs-3 rotate collapsible mb-7"
                 data-bs-toggle="collapse"
-                href="#kt_modal_add_customer_billing_info"
+                href="#kt_modal_delete_project_billing_info"
                 role="button"
                 aria-expanded="false"
-                aria-controls="kt_customer_view_details"
+                aria-controls="kt_project_view_details"
               >
                 Shipping Information
                 <span class="ms-2 rotate-180">
@@ -119,7 +119,7 @@
 
               <!--begin::Billing form-->
               <div
-                id="kt_modal_add_customer_billing_info"
+                id="kt_modal_delete_project_billing_info"
                 class="collapse show"
               >
                 <!--begin::Input group-->
@@ -259,7 +259,7 @@
                         name="billing"
                         type="checkbox"
                         value="1"
-                        id="kt_modal_add_customer_billing"
+                        id="kt_modal_delete_project_billing"
                         checked
                       />
                       <!--end::Input-->
@@ -267,7 +267,7 @@
                       <!--begin::Label-->
                       <span
                         class="form-check-label fw-semobold text-muted"
-                        for="kt_modal_add_customer_billing"
+                        for="kt_modal_delete_project_billing"
                       >
                         Yes
                       </span>
@@ -290,7 +290,7 @@
             <!--begin::Button-->
             <button
               type="reset"
-              id="kt_modal_add_customer_cancel"
+              id="kt_modal_delete_project_cancel"
               class="btn btn-light me-3"
             >
               Discard
@@ -332,11 +332,11 @@ import { countries } from "@/core/data/countries";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 
 export default defineComponent({
-  name: "add-customer-modal",
+  name: "delete-project-modal",
   components: {},
   setup() {
     const formRef = ref<null | HTMLFormElement>(null);
-    const addCustomerModalRef = ref<null | HTMLElement>(null);
+    const deleteProjectModalRef = ref<null | HTMLElement>(null);
     const loading = ref<boolean>(false);
     const formData = ref({
       name: "Sean Bean",
@@ -354,14 +354,14 @@ export default defineComponent({
       name: [
         {
           required: true,
-          message: "Customer name is required",
+          message: "Project name is required",
           trigger: "change",
         },
       ],
       email: [
         {
           required: true,
-          message: "Customer email is required",
+          message: "Project email is required",
           trigger: "change",
         },
       ],
@@ -417,7 +417,7 @@ export default defineComponent({
                 confirmButton: "btn btn-primary",
               },
             }).then(() => {
-              hideModal(addCustomerModalRef.value);
+              hideModal(deleteProjectModalRef.value);
             });
           }, 2000);
         } else {
@@ -442,7 +442,7 @@ export default defineComponent({
       submit,
       formRef,
       loading,
-      addCustomerModalRef,
+      deleteProjectModalRef,
       getAssetPath,
       countries,
     };

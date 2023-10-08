@@ -5,8 +5,9 @@
     <div class="card-header border-0 pt-5">
       <h3 class="card-title align-items-start flex-column">
         <span class="card-label fw-bold fs-3 mb-1">Projects</span>
+        <div v-if="tableData">
           <span class="text-muted mt-1 fw-semobold fs-7">Over {{ tableData.length }} Projects</span>
-
+        </div>
 
       </h3>
       <div class="card-toolbar">
@@ -57,6 +58,17 @@
                   {{ header.text }}
                 </th>
               </template>
+
+
+
+
+              <!-- <th class="min-w-150px">Order Id</th>
+              <th class="min-w-140px">Country</th>
+              <th class="min-w-120px">Date</th>
+              <th class="min-w-120px">Company</th>
+              <th class="min-w-120px">Total</th>
+              <th class="min-w-120px">Status</th>
+              <th class="min-w-100px text-end">Actions</th> -->
             </tr>
           </thead>
           <!--end::Table head-->
@@ -129,6 +141,13 @@
                     href="#"
                     class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
                   >
+                    <KTIcon icon-name="switch" icon-class="fs-3" />
+                  </a>
+
+                  <a
+                    href="#"
+                    class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                  >
                     <KTIcon icon-name="pencil" icon-class="fs-3" />
                   </a>
 
@@ -155,7 +174,7 @@
   <!--begin::Pagination-->
   <div class="d-flex flex-stack flex-wrap pt-10">
     <div class="fs-6 fw-semobold text-gray-700">
-      Showing 1 to 10 of {{ tableData.length }} entries
+      Showing 1 to 10 of 50 entries
     </div>
 
     <!--begin::Pages-->
@@ -204,27 +223,28 @@ import { defineComponent, ref } from "vue";
 import Dropdown2 from "@/components/dropdown/Dropdown2.vue";
 import type { PropType } from 'vue';
 
+
+
 type TableHeaderType = {
   text: string;
   value: string;
 };
 type TableDataType = {
-  projectName: String,
-  projectDescription: String,
-  partner: String,
-  manager:String,
-  startDate:String,
-  dueDate:String,
-  budget:Number,
-  status: String
-};
+          projectName: String,
+          projectDescription: String,
+          partner: String,
+          manager:String,
+          startDate:String,
+          dueDate:String,
+          budget:Number,
+          status: String
+        };
 
 export default defineComponent({
   name: "kt-widget-12",
   components: {
     Dropdown2,
   },
-
   props: {
     widgetClasses: String,
     tableHeader: {
@@ -239,10 +259,11 @@ export default defineComponent({
 
   setup(props) {
     const checkedRows = ref<Array<number>>([]);
+
+
     return {
       checkedRows,
       getAssetPath,
-      props,
     };
   },
 });

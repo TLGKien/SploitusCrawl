@@ -27,7 +27,6 @@
   </div>
   <!--end::App-->
 
-  <KTScrollTop />
   <KTModals />
   <!-- <KTCustomize /> -->
 </template>

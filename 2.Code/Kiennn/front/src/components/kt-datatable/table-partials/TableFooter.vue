@@ -1,8 +1,10 @@
 <template>
   <div class="row">
     <TableItemsPerPageSelect
+      :count="count"
       v-model:itemsPerPage="itemsCountInTable"
       :items-per-page-dropdown-enabled="itemsPerPageDropdownEnabled"
+      :currentPage="currentPage"
     />
     <TablePagination
       v-if="pageCount > 1"
@@ -34,8 +36,8 @@ export default defineComponent({
     TablePagination,
   },
   props: {
-    count: { type: Number, required: false, default: 5 },
-    itemsPerPage: { type: Number, default: 5 },
+    count: { type: Number, required: false, default: 10 },
+    itemsPerPage: { type: Number, default: 10 },
     itemsPerPageDropdownEnabled: {
       type: Boolean,
       required: false,

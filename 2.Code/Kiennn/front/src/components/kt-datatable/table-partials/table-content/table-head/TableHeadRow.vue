@@ -13,6 +13,11 @@
           />
         </div>
       </th>
+      <th class="hidden-column"
+        >
+          pk
+        </th>
+      
       <template v-for="(column, i) in header" :key="i">
         <th
           :class="{
@@ -110,3 +115,8 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+  .hidden-column {
+    display: none;
+  }
+</style>

@@ -1,18 +1,15 @@
 <template>
-  <KTNewTargetModal />
-  <KTAddCustomerModal/>
+  <!-- <KTAddProjectModal/> -->
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import KTNewTargetModal from "@/components/modals/forms/NewTargetModal.vue";
-import KTAddCustomerModal from "@/components/modals/forms/AddCustomerModal.vue";
+import KTAddProjectModal from "@/components/modals/forms/AddProjectModal.vue";
 
 export default defineComponent({
   name: "global-modals",
   components: {
-    KTNewTargetModal,
-    KTAddCustomerModal,
+    KTAddProjectModal,
   },
 });
 </script>

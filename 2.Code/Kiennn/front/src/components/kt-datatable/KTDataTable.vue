@@ -1,35 +1,63 @@
 <template>
-  <div class="dataTables_wrapper dt-bootstrap4 no-footer">
-    <TableContent
-      @on-items-select="onItemSelect"
-      @on-sort="onSort"
-      :header="header"
-      :data="dataToDisplay"
-      :checkboxEnabled="checkboxEnabled"
-      :checkboxLabel="checkboxLabel"
-      :empty-table-text="emptyTableText"
-      :sort-label="sortLabel"
-      :sort-order="sortOrder"
-      :loading="loading"
-    >
-      <template v-for="(_, name) in $slots" v-slot:[name]="{ row: item }">
-        <slot :name="name" :row="item" />
-      </template>
-    </TableContent>
-    <TableFooter
-      @page-change="pageChange"
-      :current-page="currentPage"
-      v-model:itemsPerPage="itemsInTable"
-      :count="totalItems"
-      :items-per-page-dropdown-enabled="itemsPerPageDropdownEnabled"
-    />
+  <div  class="card">
+    <!--begin::Header-->
+    <div class="card-header border-0 pt-5">
+      <h3 class="card-title align-items-start flex-column">
+        <span class="card-label fw-bold fs-3 mb-1">Dự án</span>
+      </h3>
+      <div class="card-toolbar">
+        <!--begin::Menu-->
+        <a
+          href="#"
+          class="btn btn-sm fw-bold btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#kt_modal_add_project"
+          >Thêm dự án</a
+        >
+        <!--end::Menu-->
+      </div>
+    </div>
+    <!--end::Header-->
+
+    <!-- start table -->
+    <div class="card-body py-3">
+      <div class="dataTables_wrapper dt-bootstrap4 no-footer">
+        <TableContent
+          @on-items-select="onItemSelect"
+          @on-sort="onSort"
+          :header="header"
+          :data="dataToDisplay"
+          :checkboxEnabled="checkboxEnabled"
+          :checkboxLabel="checkboxLabel"
+          :empty-table-text="emptyTableText"
+          :sort-label="sortLabel"
+          :sort-order="sortOrder"
+          :loading="loading"
+        >
+          <template v-for="(_, name) in $slots" v-slot:[name]="{ row: item }">
+            <slot :name="name" :row="item" />
+          </template>
+        </TableContent>
+        <TableFooter
+          @page-change="pageChange"
+          :current-page="currentPage"
+          v-model:itemsPerPage="itemsInTable"
+          :count="totalItems"
+          :items-per-page-dropdown-enabled="itemsPerPageDropdownEnabled"
+        />
+      </div>
+    </div>
+    <!-- end table -->
   </div>
+  <AddProjectModal />
+
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from "vue";
 import TableContent from "@/components/kt-datatable/table-partials/table-content/TableContent.vue";
 import TableFooter from "@/components/kt-datatable/table-partials/TableFooter.vue";
+import AddProjectModal from "@/components/modals/forms/AddProjectModal.vue";
 import type { Sort } from "@/components/kt-datatable/table-partials/models";
 
 export default defineComponent({
@@ -65,6 +93,7 @@ export default defineComponent({
   components: {
     TableContent,
     TableFooter,
+    AddProjectModal,
   },
   setup(props, { emit }) {
     const currentPage = ref(props.currentPage);

@@ -4,6 +4,9 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import JwtService from "@/core/services/JwtService";
 
+
+// Hàm để lấy giá trị của csrf token từ cookie
+
 /**
  * @description service to call HTTP request via Axios
  */

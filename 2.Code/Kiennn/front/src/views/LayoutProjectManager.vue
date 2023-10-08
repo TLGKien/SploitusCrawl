@@ -12,7 +12,6 @@ import { defineComponent,onMounted,ref } from "vue";
 
 import ApiService from "@/core/services/ApiService.ts";
 import KTDataTable from "@/components/kt-datatable/KTDataTable.vue";
-import Dropdown1 from "@/components/dropdown/Dropdown1.vue";
 
 
 export default defineComponent({
@@ -49,7 +48,6 @@ export default defineComponent({
   },
   components: {
     KTDataTable,
-    Dropdown1
   },
 });
 </script>
