@@ -13,7 +13,7 @@
         <!--begin::Modal header-->
         <div class="modal-header" id="kt_modal_edit_project_header">
           <!--begin::Modal title-->
-          <h2 class="fw-bold">Sửa dự án</h2>
+          <h2 class="fw-bold">Cập nhật dự án</h2>
           <!--end::Modal title-->
 
           <!--begin::Close-->
@@ -198,6 +198,7 @@
               type="reset"
               id="kt_modal_edit_project_cancel"
               class="btn btn-light me-3"
+              @click="cancelClick()"
             >
               Hủy
             </button>
@@ -210,7 +211,7 @@
               type="submit"
             >
               <span v-if="!loading" class="indicator-label">
-                Sửa
+                Cập nhật
               </span>
               <span v-if="loading" class="indicator-progress">
                 Đang xử lý...
@@ -231,7 +232,7 @@
 
 <script lang="ts">
 import { getAssetPath } from "@/core/helpers/assets";
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, watch } from "vue";
 import { hideModal } from "@/core/helpers/dom";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import ApiService from "@/core/services/ApiService";
@@ -242,14 +243,15 @@ export default defineComponent({
   name: "edit-project-modal",
   components: {},
   props: {
-    pk: { type: String, required: false, default: "" },
+    pkSelected: { type: String, required: false, default: "" },
   },
   setup(props) {
-    console.log(props.pk);
     const formRef = ref<null | HTMLFormElement>(null);
     const editProjectModalRef = ref<null | HTMLElement>(null);
     const loading = ref<boolean>(false);
+
     const formData = ref({
+      pk: "",
       projectName: "",
       projectDescription: "",
       partner: "",
@@ -276,6 +278,10 @@ export default defineComponent({
       ],
     });
 
+    const cancelClick = () => {
+      hideModal(editProjectModalRef.value);
+    };
+
     const submit = () => {
       if (!formRef.value) {
         return;
@@ -285,30 +291,42 @@ export default defineComponent({
         if (valid) {
           loading.value = true;
           // gửi request
-          await ApiService.post("project/create/", formData.value)
+          await ApiService.put("project/update/" + formData.value.pk + "/" , formData.value)
           .then((response) => {
             console.log(response);
+            setTimeout(() => {
+              loading.value = false;
+
+              Swal.fire({
+                text: "Cập nhật dự án thành công!",
+                icon: "success",
+                buttonsStyling: false,
+                confirmButtonText: "Ok",
+                heightAuto: true,
+                customClass: {
+                  confirmButton: "btn btn-primary",
+                },
+              }).then(() => {
+                hideModal(editProjectModalRef.value);
+              });
+            }, 2000);
           })
           .catch((error) => {
             console.error(error);
-          });
-
-          setTimeout(() => {
-            loading.value = false;
-
             Swal.fire({
-              text: "Tạo dự án thành công!",
-              icon: "success",
+              text: "Sorry, looks like there are some errors detected, please try again.",
+              icon: "error",
               buttonsStyling: false,
               confirmButtonText: "Ok",
-              heightAuto: true,
+              heightAuto: false,
               customClass: {
                 confirmButton: "btn btn-primary",
               },
-            }).then(() => {
-              // hideModal(editProjectModalRef.value);
             });
-          }, 2000);
+            return false;
+          });
+
+          
         } else {
           Swal.fire({
             text: "Sorry, looks like there are some errors detected, please try again.",
@@ -325,16 +343,20 @@ export default defineComponent({
       });
     };
 
-    onMounted(async () => {
-      await ApiService.get("project/"+props.pk)
+    watch(() => props.pkSelected, (newData, oldData) => {
+      LoadProject(newData);
+    });
+
+    const LoadProject = async (pkSelected) => {
+      await ApiService.get("project/"+pkSelected)
        .then((response) => {
         formData.value = response.data;
       })
       .catch((error) => {
         console.error(error);
       });
-    });
-    
+    }
+
     return {
       formData,
       rules,
@@ -344,6 +366,7 @@ export default defineComponent({
       editProjectModalRef,
       getAssetPath,
       statuses,
+      cancelClick
     };
   },
 });

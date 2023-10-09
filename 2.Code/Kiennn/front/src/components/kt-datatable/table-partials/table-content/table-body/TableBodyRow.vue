@@ -91,6 +91,7 @@
               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
               data-bs-toggle="modal"
               data-bs-target="#kt_modal_edit_project"
+              @click="updateClick(row.pk)"
             >
               <KTIcon icon-name="pencil" icon-class="fs-3" />
             </a>
@@ -109,10 +110,10 @@
         </td>
 
       </tr>
-      <EditProjectModal :pk="row.pk"/>
-      <DeleteProjectModal/>
+
     </template>
-    
+    <EditProjectModal :pkSelected="pkSelected"/>
+    <DeleteProjectModal/>
   </tbody>
 
 </template>
@@ -142,7 +143,7 @@ export default defineComponent({
   emits: ["on-select"],
   setup(props, { emit }) {
     const selectedItems = ref<Array<any>>([]);
-
+    let pkSelected = ref("");
     watch(
       () => [...props.currentlySelectedItems],
       (currentValue) => {
@@ -160,9 +161,15 @@ export default defineComponent({
       emit("on-select", selectedItems.value);
     };
 
+    const updateClick = (pk) => {
+      pkSelected.value = pk;
+    };
+
     return {
       selectedItems,
       onChange,
+      pkSelected,
+      updateClick,
     };
   },
 });

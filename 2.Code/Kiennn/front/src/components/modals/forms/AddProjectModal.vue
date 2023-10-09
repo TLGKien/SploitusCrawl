@@ -198,6 +198,7 @@
               type="reset"
               id="kt_modal_add_project_cancel"
               class="btn btn-light me-3"
+              @click="cancelClick()"
             >
               Hủy
             </button>
@@ -272,6 +273,10 @@ export default defineComponent({
       ],
     });
 
+    const cancelClick = () => {
+      hideModal(addProjectModalRef.value);
+    };
+
     const submit = () => {
       if (!formRef.value) {
         return;
@@ -283,28 +288,38 @@ export default defineComponent({
           // gửi request
           await ApiService.post("project/create/", formData.value)
           .then((response) => {
-            console.log(response);
+            setTimeout(() => {
+              loading.value = false;
+
+              Swal.fire({
+                text: "Tạo dự án thành công!",
+                icon: "success",
+                buttonsStyling: false,
+                confirmButtonText: "Ok",
+                heightAuto: true,
+                customClass: {
+                  confirmButton: "btn btn-primary",
+                },
+              }).then(() => {
+                hideModal(addProjectModalRef.value);
+              });
+            }, 2000);
           })
           .catch((error) => {
             console.error(error);
-          });
-
-          setTimeout(() => {
-            loading.value = false;
-
             Swal.fire({
-              text: "Tạo dự án thành công!",
-              icon: "success",
+              text: "Sorry, looks like there are some errors detected, please try again.",
+              icon: "error",
               buttonsStyling: false,
               confirmButtonText: "Ok",
-              heightAuto: true,
+              heightAuto: false,
               customClass: {
                 confirmButton: "btn btn-primary",
               },
-            }).then(() => {
-              hideModal(addProjectModalRef.value);
             });
-          }, 2000);
+            return false;
+          });
+
         } else {
           Swal.fire({
             text: "Sorry, looks like there are some errors detected, please try again.",
@@ -330,6 +345,7 @@ export default defineComponent({
       addProjectModalRef,
       getAssetPath,
       statuses,
+      cancelClick
     };
   },
 });
