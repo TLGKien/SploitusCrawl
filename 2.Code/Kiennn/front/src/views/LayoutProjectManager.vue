@@ -1,9 +1,10 @@
 <template>
   <KTDataTable
+    @on-sort="sortProject"
     @on-refresh="refreshProject"
     :header= "tableHeader"
     :data= "tableData"
-    :itemsPerPage="1"
+    :itemsPerPage="10"
     :itemsPerPageDropdownEnabled="true"
     ></KTDataTable>
 </template>
@@ -13,6 +14,8 @@ import { defineComponent,onMounted,ref } from "vue";
 
 import ApiService from "@/core/services/ApiService.ts";
 import KTDataTable from "@/components/kt-datatable/KTDataTable.vue";
+import arraySort from "array-sort";
+import type { Sort } from "@/components/kt-datatable/table-partials/models";
 
 
 export default defineComponent({
@@ -28,9 +31,20 @@ export default defineComponent({
         { columnName: 'Ngày hết hạn', columnLabel: 'dueDate', sortEnabled: true, columnWidth: 20 },
         { columnName: 'Ngân sách', columnLabel: 'budget', sortEnabled: true, columnWidth: 20 },
         { columnName: 'Trạng thái', columnLabel: 'status', sortEnabled: true, columnWidth: 20 },
-        { columnName: 'Hành động', columnLabel: 'actions', sortEnabled: true, columnWidth: 20 },
+        { columnName: 'Hành động', columnLabel: 'actions', sortEnabled: false, columnWidth: 20 },
       ];
     const projects = ref([]);
+
+    const sortProject = (sort: Sort) => {
+      const reverse: boolean = sort.order === "asc";
+      if (sort.label) {
+        arraySort(projects.value, sort.label, { reverse });
+      }
+    };
+    // const onItemSelect = (selectedItems: Array<number>) => {
+    //   selectedIds.value = selectedItems;
+    //   console.log(selectedIds.value);
+    // };
 
     const getAllProject = async () => {
       await ApiService.get("project")
@@ -54,6 +68,7 @@ export default defineComponent({
       tableHeader,
       tableData: projects,
       refreshProject,
+      sortProject,
     };
   },
   components: {
