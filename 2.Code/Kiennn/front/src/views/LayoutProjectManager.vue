@@ -1,5 +1,6 @@
 <template>
   <KTDataTable
+    @on-refresh="refreshProject"
     :header= "tableHeader"
     :data= "tableData"
     :itemsPerPage="1"
@@ -31,7 +32,7 @@ export default defineComponent({
       ];
     const projects = ref([]);
 
-    onMounted(async () => {
+    const getAllProject = async () => {
       await ApiService.get("project")
        .then((response) => {
         projects.value = response.data;
@@ -39,11 +40,20 @@ export default defineComponent({
       .catch((error) => {
         console.error(error);
       });
+    };
+
+    const refreshProject = () => {
+      getAllProject()
+    };
+
+    onMounted( () => {
+      getAllProject();
     });
     
     return {
       tableHeader,
       tableData: projects,
+      refreshProject,
     };
   },
   components: {

@@ -11,7 +11,7 @@ class ProjectCreate(generics.CreateAPIView):
 
 class ProjectList(generics.ListAPIView):
     # API endpoint that allows customer to be viewed.
-    queryset = Project.objects.all()
+    queryset = Project.objects.all().order_by('startDate')
     serializer_class = ProjectSerialiser
 
 class ProjectDetail(generics.RetrieveAPIView):

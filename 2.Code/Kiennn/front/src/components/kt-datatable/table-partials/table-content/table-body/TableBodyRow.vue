@@ -29,7 +29,7 @@
               class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6"
               data-bs-toggle="modal"
               data-bs-target="#kt_modal_view_project"
-              @click="SelectProject(row.pk)"
+              @click="selectProject(row.pk)"
               >{{ row.projectName }}</a
             >
             <span class="text-muted fw-semobold text-muted d-block fs-7"
@@ -92,7 +92,7 @@
               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
               data-bs-toggle="modal"
               data-bs-target="#kt_modal_edit_project"
-              @click="SelectProject(row.pk)"
+              @click="selectProject(row.pk)"
             >
               <KTIcon icon-name="pencil" icon-class="fs-3" />
             </a>
@@ -103,7 +103,7 @@
               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
               data-bs-toggle="modal"
               data-bs-target="#kt_modal_delete_project"
-              @click="SelectProject(row.pk)"
+              @click="selectProject(row.pk)"
             >
               <KTIcon icon-name="trash" icon-class="fs-3" />
             </a>
@@ -114,9 +114,9 @@
       </tr>
 
     </template>
-    <EditProjectModal :pkSelected="pkSelected"/>
-    <DeleteProjectModal :pkSelected="pkSelected"/>
-    <ViewProjectModal :pkSelected="pkSelected" />
+    <EditProjectModal :pkSelected="pkSelected" @on-refresh="refreshProject"/>
+    <DeleteProjectModal :pkSelected="pkSelected" @on-refresh="refreshProject"/>
+    <ViewProjectModal :pkSelected="pkSelected"/>
   </tbody>
 
 </template>
@@ -145,7 +145,7 @@ export default defineComponent({
       default: "id",
     },
   },
-  emits: ["on-select"],
+  emits: ["on-select", "on-refresh"],
   setup(props, { emit }) {
     const selectedItems = ref<Array<any>>([]);
     let pkSelected = ref("");
@@ -166,15 +166,20 @@ export default defineComponent({
       emit("on-select", selectedItems.value);
     };
 
-    const SelectProject = (pk) => {
+    const selectProject = (pk) => {
       pkSelected.value = pk;
+    };
+
+    const refreshProject = () => {
+      emit('on-refresh');
     };
 
     return {
       selectedItems,
       onChange,
       pkSelected,
-      SelectProject,
+      selectProject,
+      refreshProject,
     };
   },
 });

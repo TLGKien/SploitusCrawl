@@ -249,7 +249,9 @@ export default defineComponent({
   props: {
     pkSelected: { type: String, required: false, default: "" },
   },
-  setup(props) {
+  emits: ['on-refresh'],
+
+  setup(props, { emit }) {
     const formRef = ref<null | HTMLFormElement>(null);
     const editProjectModalRef = ref<null | HTMLElement>(null);
     const loading = ref<boolean>(false);
@@ -312,6 +314,7 @@ export default defineComponent({
                 },
               }).then(() => {
                 hideModal(editProjectModalRef.value);
+                emit('on-refresh');
               });
             }, 2000);
           })

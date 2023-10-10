@@ -242,7 +242,8 @@ import ApiService from "@/core/services/ApiService";
 export default defineComponent({
   name: "add-project-modal",
   components: {},
-  setup() {
+  emits: ["on-refresh"],
+  setup(props, { emit }) {
     const formRef = ref<null | HTMLFormElement>(null);
     const addProjectModalRef = ref<null | HTMLElement>(null);
     const loading = ref<boolean>(false);
@@ -273,6 +274,19 @@ export default defineComponent({
       ],
     });
 
+    const resetformData = () => {
+      formData.value = {
+        projectName: "",
+        projectDescription: "",
+        partner: "",
+        manager: "",
+        startDate: "",
+        dueDate: "",
+        budget: "",
+        status: "Chờ xét duyệt",
+      }
+    };
+
     const cancelClick = () => {
       hideModal(addProjectModalRef.value);
     };
@@ -302,6 +316,8 @@ export default defineComponent({
                 },
               }).then(() => {
                 hideModal(addProjectModalRef.value);
+                resetformData();
+                emit('on-refresh');
               });
             }, 2000);
           })

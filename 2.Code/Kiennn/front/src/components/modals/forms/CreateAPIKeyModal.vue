@@ -269,7 +269,8 @@ export default defineComponent({
     Field,
     VForm,
   },
-  setup() {
+  emits: ["on-refresh"],
+  setup(props, { emit }) {
     const submitButtonRef = ref<null | HTMLButtonElement>(null);
     const modalRef = ref<null | HTMLElement>(null);
     const createAPIKeyModalRef = ref<null | HTMLElement>(null);
@@ -316,6 +317,7 @@ export default defineComponent({
           },
         }).then(() => {
           hideModal(createAPIKeyModalRef.value);
+          emit('on-refresh');
         });
       }, 2000);
     };

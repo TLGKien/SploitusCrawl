@@ -16,6 +16,7 @@
       <TableBodyRow
         v-if="data.length !== 0"
         @onSelect="itemsSelect"
+        @on-refresh="refreshProject"
         :currentlySelectedItems="selectedItems"
         :data="data"
         :header="header"
@@ -61,7 +62,7 @@ export default defineComponent({
     checkboxLabel: { type: String, required: false, default: "id" },
     loading: { type: Boolean, required: false, default: false },
   },
-  emits: ["on-sort", "on-items-select"],
+  emits: ["on-sort", "on-items-select", "on-refresh"],
   components: {
     TableHeadRow,
     TableBodyRow,
@@ -112,6 +113,10 @@ export default defineComponent({
       emit("on-sort", sort);
     };
 
+    const refreshProject = () => {
+      emit("on-refresh");
+    };
+
     watch(
       () => [...selectedItems.value],
       (currentValue) => {
@@ -139,6 +144,7 @@ export default defineComponent({
       selectAll,
       itemsSelect,
       check,
+      refreshProject
     };
   },
 });

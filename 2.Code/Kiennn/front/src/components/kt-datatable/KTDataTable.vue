@@ -25,6 +25,7 @@
         <TableContent
           @on-items-select="onItemSelect"
           @on-sort="onSort"
+          @on-refresh="refreshProject"
           :header="header"
           :data="dataToDisplay"
           :checkboxEnabled="checkboxEnabled"
@@ -49,7 +50,7 @@
     </div>
     <!-- end table -->
   </div>
-  <AddProjectModal />
+  <AddProjectModal @on-refresh="refreshProject"/>
 
 </template>
 
@@ -89,6 +90,7 @@ export default defineComponent({
     "on-sort",
     "on-items-select",
     "on-items-per-page-change",
+    "on-refresh"
   ],
   components: {
     TableContent,
@@ -144,6 +146,10 @@ export default defineComponent({
       emit("on-items-select", selectedItems);
     };
 
+    const refreshProject = () => {
+      emit('on-refresh');
+    };
+
     return {
       pageChange,
       dataToDisplay,
@@ -151,6 +157,7 @@ export default defineComponent({
       onItemSelect,
       itemsInTable,
       totalItems,
+      refreshProject,
     };
   },
 });
