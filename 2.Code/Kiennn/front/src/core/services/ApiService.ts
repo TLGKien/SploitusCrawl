@@ -82,7 +82,7 @@ class ApiService {
     slug: string,
     params: any
   ): Promise<AxiosResponse> {
-    return ApiService.vueInstance.axios.put(`${resource}/${slug}`, params);
+    return ApiService.vueInstance.axios.put(`${resource}/${slug}/`, params);
   }
 
   /**

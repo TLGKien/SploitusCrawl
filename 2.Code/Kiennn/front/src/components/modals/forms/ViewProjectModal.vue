@@ -1,8 +1,8 @@
 <template>
   <div
     class="modal fade"
-    id="kt_modal_edit_project"
-    ref="editProjectModalRef"
+    id="kt_modal_view_project"
+    ref="viewProjectModalRef"
     tabindex="-1"
     aria-hidden="true"
   >
@@ -11,14 +11,14 @@
       <!--begin::Modal content-->
       <div class="modal-content">
         <!--begin::Modal header-->
-        <div class="modal-header" id="kt_modal_edit_project_header">
+        <div class="modal-header" id="kt_modal_view_project_header">
           <!--begin::Modal title-->
           <h2 class="fw-bold">Cập nhật dự án</h2>
           <!--end::Modal title-->
 
           <!--begin::Close-->
           <div
-            id="kt_modal_edit_project_close"
+            id="kt_modal_view_project_close"
             data-bs-dismiss="modal"
             class="btn btn-icon btn-sm btn-active-icon-primary"
           >
@@ -29,7 +29,6 @@
         <!--end::Modal header-->
         <!--begin::Form-->
         <el-form
-          @submit.prevent="submit()"
           :model="formData"
           :rules="rules"
           ref="formRef"
@@ -39,12 +38,12 @@
             <!--begin::Scroll-->
             <div
               class="scroll-y me-n7 pe-7"
-              id="kt_modal_edit_project_scroll"
+              id="kt_modal_view_project_scroll"
               data-kt-scroll="true"
               data-kt-scroll-activate="{default: false, lg: true}"
               data-kt-scroll-max-height="auto"
-              data-kt-scroll-dependencies="#kt_modal_edit_project_header"
-              data-kt-scroll-wrappers="#kt_modal_edit_project_scroll"
+              data-kt-scroll-dependencies="#kt_modal_view_project_header"
+              data-kt-scroll-wrappers="#kt_modal_view_project_scroll"
               data-kt-scroll-offset="300px"
             >
               <!--begin::Input group-->
@@ -81,7 +80,12 @@
 
                 <!--begin::Input-->
                 <el-form-item prop="projectDescription">
-                  <el-input v-model="formData.projectDescription" type="text" placeholder=""/>
+                  <el-input 
+                    v-model="formData.projectDescription" 
+                    type="text" 
+                    placeholder=""
+                    :disabled="true" 
+                  />
                 </el-form-item>
                 <!--end::Input-->
               </div>
@@ -95,7 +99,12 @@
 
                 <!--begin::Input-->
                 <el-form-item prop="partner">
-                  <el-input v-model="formData.partner" type="text" placeholder=""/>
+                  <el-input 
+                    v-model="formData.partner" 
+                    type="text" 
+                    placeholder=""
+                    :disabled="true" 
+                  />
                 </el-form-item>
                 <!--end::Input-->
               </div>
@@ -109,7 +118,12 @@
 
                 <!--begin::Input-->
                 <el-form-item prop="manager">
-                  <el-input v-model="formData.manager" type="text" placeholder=""/>
+                  <el-input 
+                    v-model="formData.manager" 
+                    type="text" 
+                    placeholder=""
+                    :disabled="true" 
+                  />
                 </el-form-item>
                 <!--end::Input-->
               </div>
@@ -127,7 +141,12 @@
 
                   <!--begin::Input-->
                   <el-form-item prop="startDate">
-                    <el-input v-model="formData.startDate" type="date" placeholder=""/>
+                    <el-input 
+                      v-model="formData.startDate" 
+                      type="date" 
+                      placeholder=""
+                      :disabled="true" 
+                    />
                   </el-form-item>
                   <!--end::Input-->
                 </div>
@@ -143,7 +162,12 @@
 
                   <!--begin::Input-->
                   <el-form-item prop="dueDate">
-                    <el-input v-model="formData.dueDate" type="date" placeholder="" />
+                    <el-input 
+                      v-model="formData.dueDate" 
+                      type="date" 
+                      placeholder="" 
+                      :disabled="true" 
+                    />
                   </el-form-item>
                   <!--end::Input-->
                 </div>
@@ -163,7 +187,12 @@
 
                 <!--begin::Input-->
                 <el-form-item prop="budget">
-                  <el-input v-model="formData.budget" type="text" placeholder=""/>
+                  <el-input 
+                    v-model="formData.budget" 
+                    type="text" 
+                    placeholder=""
+                    :disabled="true" 
+                  />
                 </el-form-item>
                 <!--end::Input-->
               </div>
@@ -176,7 +205,7 @@
                 <!--end::Label-->
 
                 <!--begin::Input-->
-                <el-select v-model="formData.status" class="el-input">
+                <el-select v-model="formData.status" class="el-input" :disabled="true" >
                   <el-option
                     v-for="(item, i) in statuses"
                     :key="`statuses-select-option-${i}`"
@@ -195,38 +224,6 @@
           </div>
           <!--end::Modal body-->
 
-          <!--begin::Modal footer-->
-          <div class="modal-footer flex-center">
-            <!--begin::Button-->
-            <button
-              type="button"
-              id="kt_modal_edit_project_cancel"
-              class="btn btn-light me-3"
-              @click="cancelClick()"
-            >
-              Hủy
-            </button>
-            <!--end::Button-->
-
-            <!--begin::Button-->
-            <button
-              :data-kt-indicator="loading ? 'on' : null"
-              class="btn btn-lg btn-primary"
-              type="submit"
-            >
-              <span v-if="!loading" class="indicator-label">
-                Cập nhật
-              </span>
-              <span v-if="loading" class="indicator-progress">
-                Đang xử lý...
-                <span
-                  class="spinner-border spinner-border-sm align-middle ms-2"
-                ></span>
-              </span>
-            </button>
-            <!--end::Button-->
-          </div>
-          <!--end::Modal footer-->
         </el-form>
         <!--end::Form-->
       </div>
@@ -237,21 +234,17 @@
 <script lang="ts">
 import { getAssetPath } from "@/core/helpers/assets";
 import { defineComponent, onMounted, ref, watch } from "vue";
-import { hideModal } from "@/core/helpers/dom";
-import Swal from "sweetalert2/dist/sweetalert2.js";
 import ApiService from "@/core/services/ApiService";
-// import { useAuthStore} from "@/stores/auth";
-// import Cookies from 'js-cookie'; 
 
 export default defineComponent({
-  name: "edit-project-modal",
+  name: "view-project-modal",
   components: {},
   props: {
     pkSelected: { type: String, required: false, default: "" },
   },
   setup(props) {
     const formRef = ref<null | HTMLFormElement>(null);
-    const editProjectModalRef = ref<null | HTMLElement>(null);
+    const viewProjectModalRef = ref<null | HTMLElement>(null);
     const loading = ref<boolean>(false);
 
     const formData = ref({
@@ -282,77 +275,12 @@ export default defineComponent({
       ],
     });
 
-    const cancelClick = () => {
-      hideModal(editProjectModalRef.value);
-    };
-
-    const submit = () => {
-      if (!formRef.value) {
-        return;
-      }
-
-      formRef.value.validate(async (valid: boolean) => {
-        if (valid) {
-          loading.value = true;
-          // gửi request
-          await ApiService.update("project/update", formData.value.pk, formData.value)
-          .then((response) => {
-            console.log(response);
-            setTimeout(() => {
-              loading.value = false;
-
-              Swal.fire({
-                text: "Cập nhật dự án thành công!",
-                icon: "success",
-                buttonsStyling: false,
-                confirmButtonText: "Ok",
-                heightAuto: true,
-                customClass: {
-                  confirmButton: "btn btn-primary",
-                },
-              }).then(() => {
-                hideModal(editProjectModalRef.value);
-              });
-            }, 2000);
-          })
-          .catch((error) => {
-            console.error(error);
-            Swal.fire({
-              text: "Sorry, looks like there are some errors detected, please try again.",
-              icon: "error",
-              buttonsStyling: false,
-              confirmButtonText: "Ok",
-              heightAuto: false,
-              customClass: {
-                confirmButton: "btn btn-primary",
-              },
-            });
-            return false;
-          });
-
-          
-        } else {
-          Swal.fire({
-            text: "Sorry, looks like there are some errors detected, please try again.",
-            icon: "error",
-            buttonsStyling: false,
-            confirmButtonText: "Ok",
-            heightAuto: false,
-            customClass: {
-              confirmButton: "btn btn-primary",
-            },
-          });
-          return false;
-        }
-      });
-    };
-
     watch(() => props.pkSelected, (newData, oldData) => {
       LoadProject(newData);
     });
 
     const LoadProject = async (pkSelected) => {
-      await ApiService.get("project/"+pkSelected)
+      await ApiService.get(`project/${pkSelected}`)
        .then((response) => {
         formData.value = response.data;
       })
@@ -364,13 +292,11 @@ export default defineComponent({
     return {
       formData,
       rules,
-      submit,
       formRef,
       loading,
-      editProjectModalRef,
+      viewProjectModalRef,
       getAssetPath,
       statuses,
-      cancelClick
     };
   },
 });

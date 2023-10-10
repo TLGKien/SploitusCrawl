@@ -1,6 +1,6 @@
-# demo1
+# PROJECT MANAGER
 
-This template should help get you started developing with Vue 3 in Vite.
+Using VueJS 3 in Vite.
 
 ## Recommended IDE Setup
 

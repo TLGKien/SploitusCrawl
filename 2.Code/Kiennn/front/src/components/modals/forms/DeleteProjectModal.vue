@@ -13,7 +13,7 @@
         <!--begin::Modal header-->
         <div class="modal-header" id="kt_modal_delete_project_header">
           <!--begin::Modal title-->
-          <h2 class="fw-bold">Delete a Project</h2>
+          <h2 class="fw-bold">Xác nhận xóa dự án {{ formData.projectName }} - {{ formData.projectDescription }}</h2>
           <!--end::Modal title-->
 
           <!--begin::Close-->
@@ -27,273 +27,17 @@
           <!--end::Close-->
         </div>
         <!--end::Modal header-->
-        <!--begin::Form-->
-        <el-form
-          @submit.prevent="submit()"
-          :model="formData"
-          :rules="rules"
-          ref="formRef"
-        >
-          <!--begin::Modal body-->
-          <div class="modal-body py-10 px-lg-17">
-            <!--begin::Scroll-->
-            <div
-              class="scroll-y me-n7 pe-7"
-              id="kt_modal_delete_project_scroll"
-              data-kt-scroll="true"
-              data-kt-scroll-activate="{default: false, lg: true}"
-              data-kt-scroll-max-height="auto"
-              data-kt-scroll-dependencies="#kt_modal_delete_project_header"
-              data-kt-scroll-wrappers="#kt_modal_delete_project_scroll"
-              data-kt-scroll-offset="300px"
-            >
-              <!--begin::Input group-->
-              <div class="fv-row mb-7">
-                <!--begin::Label-->
-                <label class="required fs-6 fw-semobold mb-2">Mã dự án</label>
-                <!--end::Label-->
 
-                <!--begin::Input-->
-                <el-form-item prop="name">
-                  <el-input
-                    v-model="formData.name"
-                    type="text"
-                    placeholder=""
-                  />
-                </el-form-item>
-                <!--end::Input-->
-              </div>
-              <!--end::Input group-->
-
-              <!--begin::Input group-->
-              <div class="fv-row mb-7">
-                <!--begin::Label-->
-                <label class="fs-6 fw-semobold mb-2">
-                  <span class="required">Email</span>
-
-                  <i
-                    class="fas fa-exclamation-circle ms-1 fs-7"
-                    data-bs-toggle="tooltip"
-                    title="Email address must be active"
-                  ></i>
-                </label>
-                <!--end::Label-->
-
-                <!--begin::Input-->
-                <el-form-item prop="email">
-                  <el-input v-model="formData.email" />
-                </el-form-item>
-                <!--end::Input-->
-              </div>
-              <!--end::Input group-->
-
-              <!--begin::Input group-->
-              <div class="fv-row mb-15">
-                <!--begin::Label-->
-                <label class="fs-6 fw-semobold mb-2">Description</label>
-                <!--end::Label-->
-
-                <!--begin::Input-->
-                <el-form-item prop="description">
-                  <el-input v-model="formData.description" type="text" />
-                </el-form-item>
-                <!--end::Input-->
-              </div>
-              <!--end::Input group-->
-
-              <!--begin::Billing toggle-->
-              <div
-                class="fw-bold fs-3 rotate collapsible mb-7"
-                data-bs-toggle="collapse"
-                href="#kt_modal_delete_project_billing_info"
-                role="button"
-                aria-expanded="false"
-                aria-controls="kt_project_view_details"
-              >
-                Shipping Information
-                <span class="ms-2 rotate-180">
-                  <KTIcon icon-name="down" icon-class="fs-3" />
-                </span>
-              </div>
-              <!--end::Billing toggle-->
-
-              <!--begin::Billing form-->
-              <div
-                id="kt_modal_delete_project_billing_info"
-                class="collapse show"
-              >
-                <!--begin::Input group-->
-                <div class="d-flex flex-column mb-7 fv-row">
-                  <!--begin::Label-->
-                  <label class="required fs-6 fw-semobold mb-2"
-                    >Address Line 1</label
-                  >
-                  <!--end::Label-->
-
-                  <!--begin::Input-->
-                  <el-form-item prop="addressLine">
-                    <el-input v-model="formData.addressLine" />
-                  </el-form-item>
-                  <!--end::Input-->
-                </div>
-                <!--end::Input group-->
-
-                <!--begin::Input group-->
-                <div class="d-flex flex-column mb-7 fv-row">
-                  <!--begin::Label-->
-                  <label class="fs-6 fw-semobold mb-2">Address Line 2</label>
-                  <!--end::Label-->
-
-                  <!--begin::Input-->
-                  <el-input v-model="formData.addressLine2" />
-                  <!--end::Input-->
-                </div>
-                <!--end::Input group-->
-
-                <!--begin::Input group-->
-                <div class="d-flex flex-column mb-7 fv-row">
-                  <!--begin::Label-->
-                  <label class="required fs-6 fw-semobold mb-2">Town</label>
-                  <!--end::Label-->
-
-                  <!--begin::Input-->
-                  <el-form-item prop="town">
-                    <el-input v-model="formData.town" />
-                  </el-form-item>
-                  <!--end::Input-->
-                </div>
-                <!--end::Input group-->
-
-                <!--begin::Input group-->
-                <div class="row g-9 mb-7">
-                  <!--begin::Col-->
-                  <div class="col-md-6 fv-row">
-                    <!--begin::Label-->
-                    <label class="required fs-6 fw-semobold mb-2"
-                      >State / Province</label
-                    >
-                    <!--end::Label-->
-
-                    <!--begin::Input-->
-                    <el-form-item prop="state">
-                      <el-input v-model="formData.state" />
-                    </el-form-item>
-                    <!--end::Input-->
-                  </div>
-                  <!--end::Col-->
-
-                  <!--begin::Col-->
-                  <div class="col-md-6 fv-row">
-                    <!--begin::Label-->
-                    <label class="required fs-6 fw-semobold mb-2"
-                      >Post Code</label
-                    >
-                    <!--end::Label-->
-
-                    <!--begin::Input-->
-                    <el-form-item prop="postCode">
-                      <el-input v-model="formData.postCode" />
-                    </el-form-item>
-                    <!--end::Input-->
-                  </div>
-                  <!--end::Col-->
-                </div>
-                <!--end::Input group-->
-
-                <!--begin::Input group-->
-                <div class="d-flex flex-column mb-7 fv-row">
-                  <!--begin::Label-->
-                  <label class="fs-6 fw-semobold mb-2">
-                    <span class="required">Country</span>
-
-                    <i
-                      class="fas fa-exclamation-circle ms-1 fs-7"
-                      data-bs-toggle="tooltip"
-                      title="Country of origination"
-                    ></i>
-                  </label>
-                  <!--end::Label-->
-
-                  <!--begin::Input-->
-                  <el-select v-model="formData.country">
-                    <el-option value="">Select a Country...</el-option>
-                    <el-option
-                      v-for="(item, i) in countries"
-                      :key="`countries-select-option-${i}`"
-                      :value="item.code"
-                    >
-                      {{ item.name }}
-                    </el-option>
-                  </el-select>
-                  <!--end::Input-->
-                </div>
-                <!--end::Input group-->
-
-                <!--begin::Input group-->
-                <div class="fv-row mb-7">
-                  <!--begin::Wrapper-->
-                  <div class="d-flex flex-stack">
-                    <!--begin::Label-->
-                    <div class="me-5">
-                      <!--begin::Label-->
-                      <label class="fs-6 fw-semobold"
-                        >Use as a billing adderess?</label
-                      >
-                      <!--end::Label-->
-
-                      <!--begin::Input-->
-                      <div class="fs-7 fw-semobold text-muted">
-                        If you need more info, please check budget planning
-                      </div>
-                      <!--end::Input-->
-                    </div>
-                    <!--end::Label-->
-
-                    <!--begin::Switch-->
-                    <label
-                      class="form-check form-switch form-check-custom form-check-solid"
-                    >
-                      <!--begin::Input-->
-                      <input
-                        class="form-check-input"
-                        name="billing"
-                        type="checkbox"
-                        value="1"
-                        id="kt_modal_delete_project_billing"
-                        checked
-                      />
-                      <!--end::Input-->
-
-                      <!--begin::Label-->
-                      <span
-                        class="form-check-label fw-semobold text-muted"
-                        for="kt_modal_delete_project_billing"
-                      >
-                        Yes
-                      </span>
-                      <!--end::Label-->
-                    </label>
-                    <!--end::Switch-->
-                  </div>
-                  <!--begin::Wrapper-->
-                </div>
-                <!--end::Input group-->
-              </div>
-              <!--end::Billing form-->
-            </div>
-            <!--end::Scroll-->
-          </div>
-          <!--end::Modal body-->
-
-          <!--begin::Modal footer-->
+        
           <div class="modal-footer flex-center">
             <!--begin::Button-->
             <button
-              type="reset"
+              type="button"
               id="kt_modal_delete_project_cancel"
               class="btn btn-light me-3"
+              @click="cancelClick()"
             >
-              Discard
+              Hủy
             </button>
             <!--end::Button-->
 
@@ -301,14 +45,14 @@
             <button
               :data-kt-indicator="loading ? 'on' : null"
               class="btn btn-lg btn-primary"
-              type="submit"
+              type="button"
+              @click="deleteClick()"
             >
               <span v-if="!loading" class="indicator-label">
-                Submit
-                <KTIcon icon-name="arrow-right" icon-class="fs-2 me-2 me-0" />
+                Xóa
               </span>
               <span v-if="loading" class="indicator-progress">
-                Please wait...
+                Đang xử lý...
                 <span
                   class="spinner-border spinner-border-sm align-middle ms-2"
                 ></span>
@@ -316,9 +60,7 @@
             </button>
             <!--end::Button-->
           </div>
-          <!--end::Modal footer-->
-        </el-form>
-        <!--end::Form-->
+
       </div>
     </div>
   </div>
@@ -326,125 +68,101 @@
 
 <script lang="ts">
 import { getAssetPath } from "@/core/helpers/assets";
-import { defineComponent, ref } from "vue";
+import { defineComponent, onMounted, ref, watch } from "vue";
 import { hideModal } from "@/core/helpers/dom";
-import { countries } from "@/core/data/countries";
 import Swal from "sweetalert2/dist/sweetalert2.js";
+import ApiService from "@/core/services/ApiService";
+// import { useAuthStore} from "@/stores/auth";
+// import Cookies from 'js-cookie'; 
 
 export default defineComponent({
   name: "delete-project-modal",
   components: {},
-  setup() {
+  props: {
+    pkSelected: { type: String, required: false, default: "" },
+  },
+  setup(props) {
     const formRef = ref<null | HTMLFormElement>(null);
     const deleteProjectModalRef = ref<null | HTMLElement>(null);
     const loading = ref<boolean>(false);
+
     const formData = ref({
-      name: "Sean Bean",
-      email: "sean@dellito.com",
-      description: "",
-      addressLine: "101, Collins Street",
-      addressLine2: "",
-      town: "Melbourne",
-      state: "Victoria",
-      postCode: "3000",
-      country: "US",
+      pk: "",
+      projectName: "",
+      projectDescription: "",
+      partner: "",
+      manager: "",
+      startDate: "",
+      dueDate: "",
+      budget: "",
+      status: "Chờ xét duyệt",
     });
 
-    const rules = ref({
-      name: [
-        {
-          required: true,
-          message: "Project name is required",
-          trigger: "change",
-        },
-      ],
-      email: [
-        {
-          required: true,
-          message: "Project email is required",
-          trigger: "change",
-        },
-      ],
-      addressLine: [
-        {
-          required: true,
-          message: "Address 1 is required",
-          trigger: "change",
-        },
-      ],
-      town: [
-        {
-          required: true,
-          message: "Town is required",
-          trigger: "change",
-        },
-      ],
-      state: [
-        {
-          required: true,
-          message: "State is required",
-          trigger: "change",
-        },
-      ],
-      postCode: [
-        {
-          required: true,
-          message: "Post code is required",
-          trigger: "change",
-        },
-      ],
-    });
+    const cancelClick = () => {
+      hideModal(deleteProjectModalRef.value);
+    };
 
-    const submit = () => {
-      if (!formRef.value) {
-        return;
-      }
+    const deleteClick = async () => {
+      loading.value = true;
+      // gửi request
+      await ApiService.delete(`project/delete/${formData.value.pk}/`)
+      .then((response) => {
+        console.log(response);
+        setTimeout(() => {
+          loading.value = false;
 
-      formRef.value.validate((valid: boolean) => {
-        if (valid) {
-          loading.value = true;
-
-          setTimeout(() => {
-            loading.value = false;
-
-            Swal.fire({
-              text: "Form has been successfully submitted!",
-              icon: "success",
-              buttonsStyling: false,
-              confirmButtonText: "Ok, got it!",
-              heightAuto: false,
-              customClass: {
-                confirmButton: "btn btn-primary",
-              },
-            }).then(() => {
-              hideModal(deleteProjectModalRef.value);
-            });
-          }, 2000);
-        } else {
           Swal.fire({
-            text: "Sorry, looks like there are some errors detected, please try again.",
-            icon: "error",
+            text: "Đã xóa!",
+            icon: "success",
             buttonsStyling: false,
-            confirmButtonText: "Ok, got it!",
-            heightAuto: false,
+            confirmButtonText: "Ok",
+            heightAuto: true,
             customClass: {
               confirmButton: "btn btn-primary",
             },
+          }).then(() => {
+            hideModal(deleteProjectModalRef.value);
           });
-          return false;
-        }
+        }, 2000);
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          text: "Sorry, looks like there are some errors detected, please try again.",
+          icon: "error",
+          buttonsStyling: false,
+          confirmButtonText: "Ok",
+          heightAuto: false,
+          customClass: {
+            confirmButton: "btn btn-primary",
+          },
+        });
+        return false;
       });
     };
 
+    watch(() => props.pkSelected, (newData, oldData) => {
+      LoadProject(newData);
+    });
+
+    const LoadProject = async (pkSelected) => {
+      await ApiService.get("project/"+pkSelected)
+       .then((response) => {
+        formData.value = response.data;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    }
+
     return {
       formData,
-      rules,
-      submit,
       formRef,
       loading,
       deleteProjectModalRef,
       getAssetPath,
-      countries,
+      cancelClick,
+      deleteClick,
     };
   },
 });

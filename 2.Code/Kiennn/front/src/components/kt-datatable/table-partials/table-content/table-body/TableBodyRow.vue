@@ -28,7 +28,8 @@
               href="#"
               class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6"
               data-bs-toggle="modal"
-              data-bs-target="#kt_modal_add_customer"
+              data-bs-target="#kt_modal_view_project"
+              @click="SelectProject(row.pk)"
               >{{ row.projectName }}</a
             >
             <span class="text-muted fw-semobold text-muted d-block fs-7"
@@ -91,7 +92,7 @@
               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
               data-bs-toggle="modal"
               data-bs-target="#kt_modal_edit_project"
-              @click="updateClick(row.pk)"
+              @click="SelectProject(row.pk)"
             >
               <KTIcon icon-name="pencil" icon-class="fs-3" />
             </a>
@@ -102,6 +103,7 @@
               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
               data-bs-toggle="modal"
               data-bs-target="#kt_modal_delete_project"
+              @click="SelectProject(row.pk)"
             >
               <KTIcon icon-name="trash" icon-class="fs-3" />
             </a>
@@ -113,7 +115,8 @@
 
     </template>
     <EditProjectModal :pkSelected="pkSelected"/>
-    <DeleteProjectModal/>
+    <DeleteProjectModal :pkSelected="pkSelected"/>
+    <ViewProjectModal :pkSelected="pkSelected" />
   </tbody>
 
 </template>
@@ -122,12 +125,14 @@
 import { defineComponent, ref, watch } from "vue";
 import EditProjectModal from "@/components/modals/forms/EditProjectModal.vue";
 import DeleteProjectModal from "@/components/modals/forms/DeleteProjectModal.vue";
+import ViewProjectModal from "@/components/modals/forms/ViewProjectModal.vue";
 
 export default defineComponent({
   name: "table-body-row",
   components: {
     EditProjectModal,
     DeleteProjectModal,
+    ViewProjectModal,
   },
   props: {
     header: { type: Array as () => Array<any>, required: true },
@@ -161,7 +166,7 @@ export default defineComponent({
       emit("on-select", selectedItems.value);
     };
 
-    const updateClick = (pk) => {
+    const SelectProject = (pk) => {
       pkSelected.value = pk;
     };
 
@@ -169,7 +174,7 @@ export default defineComponent({
       selectedItems,
       onChange,
       pkSelected,
-      updateClick,
+      SelectProject,
     };
   },
 });
