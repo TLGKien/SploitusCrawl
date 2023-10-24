@@ -40,12 +40,11 @@ class LoginView(APIView):
             # Xác thực thành công, đăng nhập người dùng
             #sinh token
             token = generatorJWT(user)
-            print(token)
             response_data = jwt_response_payload_handler(token,user,request)
             return Response(response_data, status=status.HTTP_200_OK)
         else:
             # Xác thực thất bại
-            return Response({'message': 'Tên đăng nhập hoặc mật khẩu không đúng'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"errors":{ "message":'Tên đăng nhập hoặc mật khẩu không đúng'}}, status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(['POST'])
 def register(request):
@@ -58,14 +57,14 @@ def register(request):
             response_data = jwt_response_payload_handler(token, user, request)
             
             return Response(response_data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response({"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 class VerifyTokenView(APIView):
     def post(self, request):
         token = request.data.get('api_token')
         username, is_token_expired = decodeJWT(token)
         if is_token_expired:
-            return Response({'message': 'Lỗi xác thực'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'errors': 'Lỗi xác thực'}, status=status.HTTP_401_UNAUTHORIZED)
         user = CustomUser.objects.get(username=username)
         response_data = jwt_response_payload_handler(token, user, request)
         return Response(response_data, status=status.HTTP_200_OK)

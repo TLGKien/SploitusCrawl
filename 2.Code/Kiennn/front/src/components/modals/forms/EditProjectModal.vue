@@ -330,6 +330,7 @@ export default defineComponent({
                 confirmButton: "btn btn-primary",
               },
             });
+            loading.value = false;
             return false;
           });
 
@@ -345,6 +346,7 @@ export default defineComponent({
               confirmButton: "btn btn-primary",
             },
           });
+          loading.value = false;
           return false;
         }
       });
@@ -363,7 +365,7 @@ export default defineComponent({
         console.error(error);
       });
     }
-    
+
     return {
       formData,
       rules,

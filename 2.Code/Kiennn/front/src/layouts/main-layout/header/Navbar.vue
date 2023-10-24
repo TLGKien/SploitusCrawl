@@ -1,19 +1,6 @@
 <template>
   <!--begin::Navbar-->
   <div class="app-navbar flex-shrink-0">
-
-    <!--begin::Activities-->
-    <div class="app-navbar-item ms-1 ms-md-3">
-      <!--begin::Drawer toggle-->
-      <div
-        class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-30px h-30px w-md-40px h-md-40px"
-        id="kt_activities_toggle"
-      >
-        <KTIcon icon-name="chart-simple" icon-class="fs-2 fs-md-1" />
-      </div>
-      <!--end::Drawer toggle-->
-    </div>
-    <!--end::Activities-->
      
     <!--begin::Theme mode-->
     <div class="app-navbar-item ms-1 ms-md-3">

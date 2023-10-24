@@ -13,7 +13,7 @@
         <!--begin::Modal header-->
         <div class="modal-header" id="kt_modal_view_project_header">
           <!--begin::Modal title-->
-          <h2 class="fw-bold">Cập nhật dự án</h2>
+          <h2 class="fw-bold">Dự án {{ formData.projectName }}</h2>
           <!--end::Modal title-->
 
           <!--begin::Close-->

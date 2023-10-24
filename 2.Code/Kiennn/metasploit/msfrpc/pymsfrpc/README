@@ -1,0 +1,75 @@
+Introduction
+============
+This module is designed to allow interaction with `Metasploit msgrpc` plugin to 
+allow remote requests and commands to be executed through scripts and programs. 
+In order to start the `Metasploit msgrpc` plugin to test this module, 
+- Running metasploit:
+
+		msfconsole
+- Load msgrpc:
+
+		msf > load msgrpc ServerHost=127.0.0.1 ServerPort=55552 User=user Pass='pass123' SSL=false
+
+Replace:
+- ServerHost - The local hostname that the server listens on. (`defaulf = 127.0.0.1`)
+- ServerPort - The local port that the server listens on. (`default = 55552`)
+- User - The username to access the server. (`default = msf`)
+- Pass - The password to access the server. The password must be enclosed in single quotes. (`default = abc123`)
+- SSL - Enables or disables SSL on the RPC socket. Set this value to true or false. (`default = false`)
+
+
+Using The Module
+================
+Creating a Msfrpc client instance
+--------------------------------
+To create a new instance of the client, you must import the msfrpc module, and 
+then create a new Msfrpc instance.  You can specify any number of options in a 
+dict form to the constructor which will allow any of the options such as host, 
+port or ssl to be modifled or enabled. An example of creating a new client is :
+
+	import msfrpc
+
+  
+  	  # Create a new instance of the Msfrpc client with the default options
+  	  client = msfrpc.Msfrpc({})
+
+Logging into Metasploit
+-----------------------
+Before any commands can be issued, you must authenticate into metasploit to do 
+this, use the login method of the new client and specify the username and 
+password to use.  The default user is always msf, and the password was specified
+either through the Pass option when we loaded the msgrpc module, or assigned by 
+default and presented to the screen.  To use the method we call the method with 
+the two arguments:
+
+	# Login to the msfmsg server using the password "abc123"
+	client.login('msf','abc123')
+
+Executing API Calls
+-------------------
+The call method allows us to call API elements from within Metasploit that are 
+surfaced through the msgrpc interface.  For the first example, we will request 
+the list of all exploits form the server.  To do this, we call the 
+module.exploits function.
+
+	# Get a list of the exploits from the server
+	mod = client.call('module.exploits')
+
+The information returned from the call is a dict containing the list of modules 
+under the key modules. If we wanted to take the first of those modules, and then
+find all of the payloads that were compatible, we could call the 
+module.compatible_payloads method to find the payloads compatible with our 
+exploit.  In this case, if more than one option is required a list of options are
+passed.  The compatible_payloads method requires one argument: the exploit to get
+more information about.
+  
+	# Get the list of compatible payloads for the first option
+	ret = client.call('module.compatible_payloads',[mod['modules'][0]])
+
+The ret in this case contains a dict of payloads, which can be enumerated. The 
+full example can be found under the examples directory.  
+
+DOCUMENTS
+=========
+
+See full documents at: [https://www.nothink.org/metasploit/documentation/RemoteAPI_4.1.pdf](https://www.nothink.org/metasploit/documentation/RemoteAPI_4.1.pdf) or [https://blog.ehcgroup.io/wp-content/uploads/2017/08/metasploit-rpc-api-guide-1.pdf](https://blog.ehcgroup.io/wp-content/uploads/2017/08/metasploit-rpc-api-guide-1.pdf) or [https://github.com/rapid7/metasploit-framework/blob/master/lib/msf/core/rpc/v10/](https://github.com/rapid7/metasploit-framework/blob/master/lib/msf/core/rpc/v10/)
