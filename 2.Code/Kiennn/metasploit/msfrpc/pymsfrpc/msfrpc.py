@@ -48,9 +48,9 @@ class Msfrpc:
         client = Msfrpc(custom_opts)
         ```
     """
-    self.host = opts.get('host') or config('HOST')
-    self.port = opts.get('port') or config('PORT')
-    self.uri = opts.get('uri') or config('URI')
+    self.host = opts.get('host') or config('SERVER_HOST')
+    self.port = opts.get('port') or config('SERVER_PORT')
+    self.uri = opts.get('uri') or config('SERVER_URI')
     self.ssl = opts.get('ssl') or False
     self.authenticated = False
     self.token = False
@@ -128,7 +128,6 @@ class Msfrpc:
         ```
     """
     ret = self.call('auth.login',[user,password])
-    print(ret)
     if ret.get(b'result') == b'success':
       self.authenticated = True
       self.token = ret.get(b'token')
