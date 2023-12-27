@@ -50,14 +50,24 @@ class SploitusAPI:
         }
         return headers
     
-    def _make_post_request(self, url, headers, data):
+    def _make_post_request(self, url, headers, data, timeout=5):
         """
         Thực hiện yêu cầu HTTP POST.
         """
-
-        with httpx.Client(http2=True) as client:
-            response = client.post(url, headers=headers, json=data)
-        return response        
+        
+        try:
+            with httpx.Client(http2=True, timeout=timeout) as client:
+                response = client.post(url, headers=headers, json=data)
+                response.raise_for_status()  # Nếu có lỗi HTTP response status code, ngoại lệ sẽ được ném.
+            return response        
+        except httpx.TimeoutException as e:
+            print(f"Timeout exception: {e}")
+        except httpx.RequestError as e:
+            print(f"Request error: {e}")
+        except httpx.HTTPError as e:
+            print(f"HTTP error: {e}")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
 
     def _get_data_total(self):
         """
